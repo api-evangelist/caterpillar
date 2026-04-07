@@ -1,7 +1,12 @@
 aid: caterpillar
-url: https://raw.githubusercontent.com/api-evangelist/caterpillar/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/caterpillar/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.caterpillar.com
+description: >-
+  Caterpillar is the world's leading manufacturer of construction and mining equipment,
+  off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric
+  locomotives.
