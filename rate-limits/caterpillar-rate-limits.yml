@@ -4,89 +4,42 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Caterpillar
 providerId: caterpillar
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
-  - Construction
-  - Engines
-  - Fortune 500
-  - Heavy Equipment
-  - Locomotives
-  - Manufacturing
-  - Mining
   - Telematics
+  - Heavy Equipment
   - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Caterpillar API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+description: The Cat Digital Marketplace gates API access behind a developer-subscription flow on digital.cat.com.
+  Per-second / per-minute limits are not published in the public catalog overview and are surfaced to
+  the subscriber once an API product is added to a developer's account. Limits typically vary per API
+  product and per Cat Connect / VisionLink subscription class.
+notes: Public catalog overview returned 403 to anonymous fetch; numeric limits are gated behind portal
+  authentication.
+sources:
+  - https://digital.cat.com/api-catalog-overview
+  - https://digital.cat.com/
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
   serviceUnavailable: 503
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Cat Digital Marketplace API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Cat Digital Marketplace API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Cat Digital Marketplace API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Cat Digital Marketplace API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Cat Digital Marketplace API
+  - name: Per-API product quota / rate
+    scope: subscription
+    metric: varies
+    limit: see Cat Digital portal product page
+  - name: Cat Connect / VisionLink platform throughput
+    scope: customer-account
+    metric: varies
+    limit: see Cat Connect customer subscription terms
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+  - name: Subscription-scoped limits
+    description: Limits are evaluated per Cat Digital subscription. Different API products in the catalog
+      apply different per-product limits.
+  - name: Backoff
+    description: On 429 / 503, retry with exponential backoff and jitter; honor Retry-After when supplied.
+  - name: Telemetry cadence
+    description: VisionLink-derived data is updated on the platform's collection cadence; polling faster
+      than the upstream refresh window wastes quota and adds load without surfacing new data.
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
