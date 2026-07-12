@@ -52,6 +52,8 @@ apis:
       Digital portal to receive API credentials and execute calls against
       the Cat Connect and VisionLink platforms.
 common:
+  - type: DomainSecurity
+    url: security/caterpillar-domain-security.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/caterpillar-inc
   - type: Website
