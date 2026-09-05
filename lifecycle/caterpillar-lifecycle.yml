@@ -1,0 +1,65 @@
+generated: '2026-09-05'
+method: searched
+source: https://digital.cat.com/release-notes-manager
+versioning:
+  scheme: uri-path
+  note: >-
+    Two different version conventions coexist in the estate. The VisionLink APIs
+    carry an explicit /v1/ segment inside the product path
+    (https://services.cat.com/catDigital/assetSummary/v1/assets,
+    https://services.cat.com/catDigital/faultsHistory/v1/faults). The ISO 15143-3
+    surface carries no version segment at all
+    (https://services.cat.com/telematics/iso15143/fleet/{pageNumber}) — it is
+    versioned by the external standard (AEMP 2.0) rather than by Caterpillar.
+  current:
+    visionlink: v1
+    iso_15143_3: AEMP 2.0 (ISO 15143-3)
+  docs: https://digital.cat.com/development-guidelines
+deprecation:
+  policy_url: https://digital.cat.com/news-announcements-list
+  policy_published: false
+  sunset_header: unknown
+  note: >-
+    No standing deprecation policy or RFC 8594 Sunset/Deprecation header support is
+    published. Deprecation is announced case by case through the Digital
+    Marketplace news feed and the release-notes manager.
+  events:
+    - name: API credential migration
+      date_announced: null
+      deadline: '2026-06-30'
+      breaking: true
+      summary: >-
+        Caterpillar moved its API estate to a new authentication system and
+        required every API consumer to migrate to new credentials by 30 June 2026
+        to keep access. This is the largest recorded breaking change in the
+        estate and is consistent with the PingFederate authorization server now
+        serving fedlogin.cat.com.
+      source: https://digital.cat.com/news-announcements-list
+    - name: Legacy VisionLink APIs superseded
+      date_announced: null
+      deadline: null
+      breaking: true
+      summary: >-
+        Cat Digital states the new Caterpillar VisionLink APIs replace the legacy
+        VisionLink APIs. No sunset date for the legacy surface is published.
+      source: https://digital.cat.com/api-catalog-overview
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment is published for the Cat Digital API estate.
+status_page: null
+status_page_note: >-
+  No status page was found for the Cat Digital APIs. status.cat.com and
+  status.caterpillar.com do not resolve; the Digital Marketplace publishes a
+  release-notes manager and a news feed, neither of which reports live
+  availability. Equipment Management release notes for the Cat App and My.Cat.com
+  are published on cat.com but cover the applications, not the API gateway.
+deprecated_operations: []
+environments:
+  production: https://services.cat.com
+  production_mirror: https://api.cat.com
+  sandbox: null
+  sandbox_note: >-
+    Cat Digital states the VisionLink APIs are available in the production
+    environment only. No sandbox, test tenant, mock server or magic test
+    identifiers are published, which is why no sandbox/ artifact exists in this repo.

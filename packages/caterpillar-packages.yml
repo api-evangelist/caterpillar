@@ -1,0 +1,65 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  registry.npmjs.org search, pypi.org, and the Cat Digital Marketplace developer
+  documentation, 2026-09-05
+note: >-
+  Caterpillar publishes NO first-party client libraries. Searched npm (including
+  the terms "caterpillar visionlink" and "cat iso15143"), PyPI (catdigital,
+  visionlink, cat-telematics, iso15143 — all 404), and the Cat Digital
+  Marketplace developer resources. What Cat Digital ships instead of an SDK is a
+  pair of Postman collections plus a walkthrough video showing a consumer how to
+  validate credentials in Postman. That is a real developer artifact and it is
+  recorded below as a distribution, but it is not a client library: nothing here
+  can be added to a build. Package names surfaced by search that carry the
+  Caterpillar or VisionLink brand (`caterpillar` by bevryme, `node-visionlink` by
+  aknorw, `caterpillar-crawl`) are unrelated third-party projects and are
+  deliberately NOT listed as Caterpillar packages.
+packages: []
+package_count: 0
+official_sdk_count: 0
+distributions:
+  - kind: postman-collection
+    name: ISO 15143-3 (AEMP 2.0) API - Postman Collection
+    url: https://digital.cat.com/knowledge-hub/document/iso-15143-3-aemp-20-api-postman-collection
+    official: true
+    registry: null
+    version: null
+    published: null
+    note: >-
+      Published as a downloadable document on the Cat Digital knowledge hub, not
+      on a Postman public workspace, so it carries no registry metadata and no
+      version or publish date can be read. Caterpillar describes it as containing
+      all ISO 15143-3 (AEMP 2.0) endpoints, importable into Postman.
+  - kind: postman-collection
+    name: VisionLink APIs - Postman Collection
+    url: https://digital.cat.com/knowledge-hub/document/visionlink-apis-postman-collection
+    official: true
+    registry: null
+    version: null
+    published: null
+    note: Same shape as the ISO collection — a knowledge-hub download, no registry metadata.
+registries_checked:
+  - registry: npm
+    result: no first-party package
+  - registry: pypi
+    result: no first-party package
+  - registry: maven-central
+    result: not checked — no Java client is referenced anywhere in Cat Digital documentation
+  - registry: nuget
+    result: not checked — no .NET client is referenced anywhere in Cat Digital documentation
+  - registry: rubygems
+    result: not checked — no Ruby client is referenced anywhere in Cat Digital documentation
+  - registry: pkg.go.dev
+    result: not checked — no Go client is referenced anywhere in Cat Digital documentation
+  - registry: crates.io
+    result: not checked — no Rust client is referenced anywhere in Cat Digital documentation
+github:
+  organization: https://github.com/CaterpillarInc
+  org_name: CAT
+  public_repos: 0
+  contact: CatDevPortal@cat.com
+  note: >-
+    The official Caterpillar GitHub organization exists (created 2016-06-23) and
+    lists dev.cat.com as its site and CatDevPortal@cat.com as its contact, but it
+    publishes zero public repositories. dev.cat.com no longer resolves in DNS.

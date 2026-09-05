@@ -1,0 +1,54 @@
+generated: '2026-09-05'
+method: searched
+status: candidate
+source: >-
+  searched the Cat Digital Marketplace, the CaterpillarInc GitHub organization,
+  npm (@modelcontextprotocol and vendor scopes) and public MCP registries, 2026-09-05
+note: >-
+  Caterpillar ships NO Model Context Protocol server — no hosted endpoint, no
+  stdio package, no reference in Cat Digital documentation or the CaterpillarInc
+  GitHub organization (which has zero public repositories). The tools below are a
+  CANDIDATE surface derived from the endpoints Caterpillar documents publicly; they
+  do not exist as MCP tools and no endpoint is asserted. Input schemas are not
+  recorded because Caterpillar publishes no OpenAPI to inherit parameters from —
+  writing them would be invention. This artifact is pointed at from apis.yml with
+  type X-MCPServerCandidate, not MCPServer, precisely so it is not credited as a
+  shipped agent surface.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: searched
+server:
+  name: null
+  transport: null
+  url: null
+tools:
+  - name: get_fleet_snapshot
+    description: Retrieve a paginated ISO 15143-3 (AEMP 2.0) fleet snapshot.
+    source_endpoint: GET https://services.cat.com/telematics/iso15143/fleet/{pageNumber}
+    input_schema: null
+    confidence: medium
+  - name: get_equipment_snapshot
+    description: Retrieve an ISO 15143-3 (AEMP 2.0) snapshot for one machine.
+    source_endpoint: GET https://services.cat.com/telematics/iso15143/equipment/{equipmentId}
+    input_schema: null
+    confidence: medium
+  - name: get_asset_summary
+    description: Retrieve VisionLink asset summary data.
+    source_endpoint: GET https://services.cat.com/catDigital/assetSummary/v1/assets
+    input_schema: null
+    confidence: medium
+  - name: get_fault_history
+    description: Retrieve VisionLink fault history for machine health analysis (source, type, severity).
+    source_endpoint: GET https://services.cat.com/catDigital/faultsHistory/v1/faults
+    input_schema: null
+    confidence: medium
+agent_readiness_gaps:
+  - No MCP server of any deployment mode.
+  - No public OpenAPI, so no tool can inherit a real inputSchema.
+  - No /.well-known/oauth-protected-resource, so a token holder cannot discover the resource server.
+  - No rate-limit response headers, so an agent cannot read its remaining budget at runtime.
+  - No sandbox and no dry-run mode, so nothing can be rehearsed before it is called.

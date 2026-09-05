@@ -1,0 +1,187 @@
+generated: '2026-09-05'
+method: probed
+source: live HTTPS probes, 2026-09-05
+note: >-
+  Caterpillar's OAuth 2.0 / OpenID Connect authorization server at fedlogin.cat.com
+  (PingFederate) is the only host in the estate that serves a real /.well-known
+  document. It was found by following the token URL published in the Cat Digital
+  ISO 15143-3 developer guide (https://fedlogin.cat.com/as/token.oauth2), not by
+  probing the primary domain — caterpillar.com and cat.com sit behind an Akamai
+  edge policy that answers 403 "Access Denied" to every non-browser request, and
+  digital.cat.com (Drupal behind Cloudflare) returns a rendered 404 page for every
+  /.well-known/ path. fedlogin.cat.com returns HTTP 200 with HTML for
+  /.well-known/security.txt and /apis.yml, but the body is a Radware
+  "Unauthorized Request Blocked" interstitial, not a document — recorded as a miss.
+path_echo_control: passed
+hit_count: 2
+hosts:
+  - host: https://fedlogin.cat.com
+    role: oauth-authorization-server
+    documents:
+      - path: /.well-known/openid-configuration
+        status: 200
+        file: caterpillar-openid-configuration.json
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: caterpillar-oauth-authorization-server.json
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/security.txt
+        status: 200
+        note: >-
+          200 but the body is a Radware WAF "Unauthorized Request Blocked" HTML
+          interstitial, not an RFC 9116 document. Treated as a miss; no SecurityTxt
+          pointer emitted.
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /apis.yml
+        status: 200
+        note: 200 but the body is the same Radware WAF interstitial, not an APIs.json index. Miss.
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /.well-known/caterpillar-negative-control-7f3ab91c.json
+        status: 404
+        note: negative control — correctly 404, so this host does not echo paths.
+  - host: https://services.cat.com
+    role: api-gateway
+    note: Apigee gateway (caterpillar-prod.apigee.net); every path returns a JSON {code, description} 404 envelope.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/caterpillar-negative-control-7f3ab91c.json
+        status: 404
+        note: negative control — correctly 404.
+  - host: https://api.cat.com
+    role: api-gateway-mirror
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /apis.json
+        status: 404
+      - path: /.well-known/caterpillar-negative-control-7f3ab91c.json
+        status: 404
+        note: negative control — correctly 404.
+  - host: https://digital.cat.com
+    role: developer-portal
+    note: >-
+      Drupal behind Cloudflare. /.well-known/* paths return a rendered HTML 404
+      page (~42KB); /apis.json and /apis.yml are answered by the Cloudflare bot
+      block with 403. No documents served.
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/oauth-protected-resource
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/apis.json
+        status: 404
+      - path: /.well-known/aauth-resource.json
+        status: 404
+      - path: /apis.json
+        status: 403
+      - path: /apis.yml
+        status: 403
+  - host: https://www.caterpillar.com
+    role: corporate-website
+    note: >-
+      Akamai edge answers 403 "Access Denied" to every request from a non-browser
+      client, including the negative control. Nothing here is readable by a machine,
+      so no presence or absence can be asserted for this host.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/oauth-protected-resource
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/ai-plugin.json
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+      - path: /.well-known/apis.json
+        status: 403
+      - path: /apis.json
+        status: 403
+      - path: /apis.yml
+        status: 403
+      - path: /.well-known/caterpillar-negative-control-7f3ab91c.json
+        status: 403
+        note: negative control also 403 — the host is blanket-blocking, not echoing.
+  - host: https://www.cat.com
+    role: brand-website
+    note: Same Akamai blanket 403 as www.caterpillar.com; negative control also 403.
+    documents:
+      - path: /.well-known/security.txt
+        status: 403
+      - path: /.well-known/openid-configuration
+        status: 403
+      - path: /.well-known/oauth-authorization-server
+        status: 403
+      - path: /.well-known/api-catalog
+        status: 403
+      - path: /.well-known/agent-card.json
+        status: 403
+      - path: /.well-known/agent.json
+        status: 403
+      - path: /apis.json
+        status: 403
+      - path: /.well-known/caterpillar-negative-control-7f3ab91c.json
+        status: 403
+        note: negative control also 403.

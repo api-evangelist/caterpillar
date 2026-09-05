@@ -4,11 +4,12 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Caterpillar
 providerId: caterpillar
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+generated: '2026-09-05'
+method: searched
+source: https://digital.cat.com/api-catalog-overview
+modified: '2026-09-05'
+reconciled: true
+plan_count: 0
 tags:
   - Construction
   - Heavy Equipment
@@ -20,8 +21,17 @@ description: Caterpillar's Cat Digital Marketplace (digital.cat.com) publishes a
   publicly listed — developers subscribe through the Cat Digital portal and receive product-specific
   terms. Most APIs are bundled with the underlying Cat Connect / VisionLink subscription that the customer's
   Cat Dealer has already sold.
-notes: Cat Digital portal is gated; per-API pricing is not externally visible. Pricing is generally bundled
-  into Cat Connect / VisionLink customer subscriptions sold via Cat Dealers.
+notes: >-
+  plan_count is 0 on purpose. Caterpillar publishes NO priced plans for its API
+  estate — there is no public price list, no free tier, no self-serve checkout and
+  no published quota-to-price ladder. Access is requested through the Cat Digital
+  Marketplace, approved by Caterpillar (its own documentation says approval takes
+  approximately two weeks), and the commercial terms arrive bundled into the Cat
+  Connect / VisionLink subscription a Cat Dealer has already sold to the customer.
+  The single entry below is that access path, recorded so the shape of the
+  commercial relationship is legible; it is not a published plan. Re-checked
+  2026-09-05: digital.cat.com serves no /pricing page and the marketplace pages
+  reachable by search name no prices.
 sources:
   - https://digital.cat.com/
   - https://digital.cat.com/api-catalog-overview

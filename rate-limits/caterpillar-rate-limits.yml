@@ -4,45 +4,104 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Caterpillar
 providerId: caterpillar
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+generated: '2026-09-05'
+method: searched
+modified: '2026-09-05'
+reconciled: true
+source: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
 tags:
   - Telematics
   - Heavy Equipment
   - Rate Limiting
-description: The Cat Digital Marketplace gates API access behind a developer-subscription flow on digital.cat.com.
-  Per-second / per-minute limits are not published in the public catalog overview and are surfaced to
-  the subscriber once an API product is added to a developer's account. Limits typically vary per API
-  product and per Cat Connect / VisionLink subscription class.
-notes: Public catalog overview returned 403 to anonymous fetch; numeric limits are gated behind portal
-  authentication.
+  - ISO 15143-3
+description: >-
+  Caterpillar publishes real numeric limits for the ISO 15143-3 (AEMP 2.0) API in
+  its developer guide. Access is scoped to the OAuth client id issued on
+  subscription approval: a daily quota of 50,000 requests per client id shared
+  across all endpoints, resetting at 12:00am GMT, plus a per-second throttle. The
+  guide gives a general throttle of 10 calls per second per client id with a
+  recommendation to stay at 7-8, and a higher 100 calls per second throttle for
+  the Fleet Snapshot, Equipment Snapshot and Fault Codes Timeseries endpoints.
+  Exhausting the quota returns HTTP 429 with the gateway's
+  {"code":"429.002","description":"Quota rate limit exceeded."} envelope.
+notes: >-
+  The numbers are documented but the runtime signal is not. No X-RateLimit-*,
+  RateLimit-* or Retry-After response header is documented, and none was present
+  on anonymous responses observed from https://services.cat.com on 2026-09-05, so
+  a client cannot read its remaining budget at runtime and has to track the quota
+  itself. Limits for the VisionLink API family (assetSummary, faultsHistory,
+  assetsOperation, assetFenceHistory, utilization) are not publicly published.
+  This artifact replaces the 2026-05-04 bulk-sweep placeholder, which recorded
+  "limits not published" — they are published; the earlier pass was stopped by the
+  Cloudflare bot block on digital.cat.com and did not reach the developer guide.
 sources:
+  - https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
   - https://digital.cat.com/api-catalog-overview
-  - https://digital.cat.com/
 responseCodes:
   throttled: 429
+  throttledCode: '429.002'
+  throttledBody: '{"code":"429.002","description":"Quota rate limit exceeded."}'
   serviceUnavailable: 503
+responseHeaders:
+  rateLimitHeaders: []
+  retryAfter: false
+  note: No rate-limit response headers are documented or observed.
 limits:
-  - name: Per-API product quota / rate
-    scope: subscription
-    metric: varies
-    limit: see Cat Digital portal product page
-  - name: Cat Connect / VisionLink platform throughput
-    scope: customer-account
-    metric: varies
-    limit: see Cat Connect customer subscription terms
+  - name: Daily request quota
+    api: caterpillar:iso-15143-3-aemp-api
+    scope: per-client-id
+    metric: requests
+    limit: 50000
+    window: day
+    reset: 00:00 GMT
+    shared_across_endpoints: true
+    method: searched
+    source: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
+  - name: General throttle
+    api: caterpillar:iso-15143-3-aemp-api
+    scope: per-client-id
+    metric: requests
+    limit: 10
+    window: second
+    recommended_max: 8
+    method: searched
+    source: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
+  - name: Snapshot / fault-code timeseries throttle
+    api: caterpillar:iso-15143-3-aemp-api
+    scope: per-client-id
+    metric: requests
+    limit: 100
+    window: second
+    endpoints:
+      - Fleet Snapshot
+      - Equipment Snapshot
+      - Fault Codes Timeseries
+    method: searched
+    source: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
+  - name: VisionLink API limits
+    api: caterpillar:visionlink-apis
+    scope: per-client-id
+    metric: unknown
+    limit: null
+    method: none
+    note: Not publicly published; surfaced to the subscriber after approval.
 policies:
-  - name: Subscription-scoped limits
-    description: Limits are evaluated per Cat Digital subscription. Different API products in the catalog
-      apply different per-product limits.
+  - name: Client-id-scoped quota
+    description: >-
+      Quota and throttle are evaluated per OAuth client id, not per user or per
+      asset, and the daily quota is shared across every endpoint the client calls.
   - name: Backoff
-    description: On 429 / 503, retry with exponential backoff and jitter; honor Retry-After when supplied.
+    description: >-
+      On 429 the API returns code 429.002 with no Retry-After. Retry with
+      exponential backoff and jitter, and treat the 12:00am GMT reset as the
+      earliest point a quota exhaustion clears.
   - name: Telemetry cadence
-    description: VisionLink-derived data is updated on the platform's collection cadence; polling faster
-      than the upstream refresh window wastes quota and adds load without surfacing new data.
+    description: >-
+      VisionLink-derived data is updated on the platform's collection cadence;
+      polling faster than the upstream refresh window burns quota without
+      surfacing new data. Caterpillar's own recommendation to stay at 7-8 calls
+      per second against a 10/sec ceiling points the same way.
+limit_count: 3
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com

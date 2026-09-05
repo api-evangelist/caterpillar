@@ -11,35 +11,40 @@ tags:
   - Manufacturing
   - Mining
   - Telematics
+  - Fleet Management
+  - ISO 15143-3
+  - AEMP
 type: Index
 deliveryModel:
   model: saas
   open_source: false
   commercial: true
-  callable_host: false
+  callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: medium
+  confidence: high
   source:
+  - probe
   - pricing
-  generated: '2026-08-28'
-  method: derived
+  generated: '2026-09-05'
+  method: probed
 accessModel:
   pricing: unknown
-  onboarding: unknown
+  onboarding: request
   trial: false
   try_now: false
   public: false
-  label: Unknown
-  confidence: low
+  label: Subscription requested through the Cat Digital Marketplace
+  confidence: medium
   source:
   - plans
-  generated: '2026-07-22'
-  method: derived
+  - docs
+  generated: '2026-09-05'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/caterpillar.png
 access: 3rd-Party
 created: '2026-03-21'
-modified: '2026-04-23'
-position: Consuming
+modified: '2026-09-05'
+position: Producing
 description: >-
   Caterpillar Inc. (NYSE: CAT) is the world's leading manufacturer of
   construction and mining equipment, off-highway diesel and natural gas
@@ -47,9 +52,15 @@ description: >-
   digital arm, Cat Digital, publishes developer APIs through the Cat Digital
   Marketplace (digital.cat.com) covering fleet, asset, fuel, and worksite
   telematics built on top of the Cat Connect and VisionLink data platforms.
+  The callable surface runs on an Apigee gateway at services.cat.com (mirrored
+  at api.cat.com) and is authorized by a PingFederate OAuth 2.0 / OpenID
+  Connect authorization server at fedlogin.cat.com. Caterpillar implements the
+  ISO 15143-3 (AEMP 2.0) mixed-fleet telematics standard, so a consumer that
+  already speaks AEMP can read Cat machine data with no bespoke connector.
 apis:
   - aid: caterpillar:cat-digital-marketplace-api
     name: Cat Digital Marketplace API
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/caterpillar.png
     tags:
       - Assets
       - Construction
@@ -57,11 +68,16 @@ apis:
       - Telematics
       - VisionLink
     humanURL: https://digital.cat.com/api-catalog-overview
+    baseURL: https://services.cat.com
     properties:
       - url: https://digital.cat.com/api-catalog-overview
         type: Documentation
       - url: https://digital.cat.com/
         type: Portal
+      - url: https://digital.cat.com/knowledge-hub/documentation/develop-cat-apis-getting-started
+        type: GettingStarted
+      - url: https://digital.cat.com/development-guidelines
+        type: APIReference
       - url: https://digital.cat.com/release-notes-manager
         type: ChangeLog
       - url: https://digital.cat.com/legal
@@ -73,20 +89,118 @@ apis:
       spanning asset telematics, fleet management, fuel data, utilization,
       hours/odometer, and geofencing. Developers subscribe via the Cat
       Digital portal to receive API credentials and execute calls against
-      the Cat Connect and VisionLink platforms.
+      the Cat Connect and VisionLink platforms. All catalog APIs are fronted
+      by the Apigee gateway at services.cat.com, which returns a uniform
+      {code, description} JSON error envelope.
+  - aid: caterpillar:iso-15143-3-aemp-api
+    name: ISO 15143-3 (AEMP 2.0) API
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/caterpillar.png
+    tags:
+      - Telematics
+      - Fleet Management
+      - ISO 15143-3
+      - AEMP
+      - Heavy Equipment
+      - Standards
+    humanURL: https://digital.cat.com/apis/products/prod/iso-15143-3-aemp-20-api
+    baseURL: https://services.cat.com/telematics/iso15143
+    properties:
+      - url: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
+        type: Documentation
+      - url: https://digital.cat.com/knowledge-hub/faq/iso-15143-3-aemp-20-api-faqs
+        type: Support
+      - url: https://digital.cat.com/knowledge-hub/document/iso-15143-3-aemp-20-api-postman-collection
+        type: Postman
+    description: >-
+      Caterpillar's implementation of the ISO 15143-3 (AEMP 2.0) mixed-fleet
+      telematics standard. Publishes Fleet Snapshot (/fleet/{pageNumber}),
+      Equipment Snapshot (/equipment/{equipmentId}) and Timeseries endpoints
+      (fault code, location, switch status, cumulative operating hours,
+      cumulative idle hours, cumulative fuel used, engine condition, fuel
+      remaining ratio) so a consumer that already speaks AEMP can ingest Cat
+      machine data alongside other OEM fleets without a bespoke connector.
+      Mirrored at https://api.cat.com/telematics/iso15143.
+  - aid: caterpillar:visionlink-apis
+    name: VisionLink APIs
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/caterpillar.png
+    tags:
+      - VisionLink
+      - Assets
+      - Faults
+      - Utilization
+      - Geofencing
+      - Telematics
+    humanURL: https://digital.cat.com/api-catalog-overview
+    baseURL: https://services.cat.com/catDigital
+    properties:
+      - url: https://digital.cat.com/knowledge-hub/document/visionlink-apis-postman-collection
+        type: Postman
+      - url: https://digital.cat.com/api-catalog-overview
+        type: Documentation
+    description: >-
+      The next-generation VisionLink APIs let dealers and customers pull the
+      fleet data VisionLink reports without mining it out of the application —
+      Assets Operation, Assets Summary, Faults History, Asset Fence History and
+      Utilization. They replace the legacy VisionLink APIs and are available in
+      the production environment only (no sandbox). Verified live surfaces
+      include /assetSummary/v1/assets and /faultsHistory/v1/faults.
 common:
   - type: DomainSecurity
     url: security/caterpillar-domain-security.yml
+  - type: VulnerabilityDisclosure
+    url: security/caterpillar-vulnerability-disclosure.yml
+  - type: Security
+    url: https://hackerone.com/caterpillar
+  - type: Authentication
+    url: authentication/caterpillar-authentication.yml
+  - type: OAuthScopes
+    url: scopes/caterpillar-scopes.yml
+  - type: Conformance
+    url: conformance/caterpillar-conformance.yml
+  - type: ErrorCatalog
+    url: errors/caterpillar-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/caterpillar-lifecycle.yml
+  - type: Deprecation
+    url: lifecycle/caterpillar-lifecycle.yml
+  - type: Conventions
+    url: conventions/caterpillar-conventions.yml
+  - type: RateLimits
+    url: rate-limits/caterpillar-rate-limits.yml
+  - type: Plans
+    url: plans/caterpillar-plans-pricing.yml
+  - type: Packages
+    url: packages/caterpillar-packages.yml
+  - type: WellKnown
+    url: well-known/caterpillar-well-known.yml
+  - type: OpenIDConnect
+    url: well-known/caterpillar-openid-configuration.json
+  - type: LLMsTxt
+    url: llms/caterpillar-llms.txt
+  - type: ChangeLog
+    url: changelog/caterpillar-changelog.yml
+  - type: X-MCPServerCandidate
+    url: mcp/caterpillar-mcp.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/caterpillar-inc
   - type: Website
     url: https://www.caterpillar.com/
   - type: Portal
     url: https://digital.cat.com/
+  - type: DeveloperPortal
+    url: https://digital.cat.com/
   - type: Documentation
     url: https://digital.cat.com/api-catalog-overview
+  - type: APIReference
+    url: https://digital.cat.com/development-guidelines
+  - type: GettingStarted
+    url: https://digital.cat.com/knowledge-hub/documentation/develop-cat-apis-getting-started
+  - type: Postman
+    url: https://digital.cat.com/knowledge-hub/document/iso-15143-3-aemp-20-api-postman-collection
   - type: ChangeLog
     url: https://digital.cat.com/release-notes-manager
+  - type: GitHubOrganization
+    url: https://github.com/CaterpillarInc
   - type: About
     url: https://www.caterpillar.com/en/company.html
   - type: Careers
@@ -98,6 +212,8 @@ common:
   - type: Newsroom
     url: https://www.caterpillar.com/en/news.html
   - type: Support
+    url: https://digital.cat.com/knowledge-hub/faq
+  - type: HelpCenter
     url: https://www.caterpillar.com/en/support.html
   - type: Contact
     url: https://www.caterpillar.com/en/support/contact-us.html
@@ -107,6 +223,46 @@ common:
     url: https://digital.cat.com/privacy
   - type: Sitemap
     url: https://www.caterpillar.com/en/sitemap.html
+x-enrichment:
+  date: '2026-09-05'
+  status: enriched
+  artifacts_added: 14
+  pass: local-v3
+x-discovery:
+  date: '2026-09-05'
+  note: >-
+    Contract discovery per pipeline STEP 0b. No public OpenAPI, GraphQL, AsyncAPI,
+    gRPC/Protobuf, WSDL, MCP tools/list or A2A agent card exists. What DOES exist and
+    was previously unrecorded: an Apigee API gateway at services.cat.com (mirrored at
+    api.cat.com), live ISO 15143-3 (AEMP 2.0) and VisionLink endpoints returning a
+    structured 401 envelope, and a PingFederate OAuth 2.0 / OIDC authorization server
+    at fedlogin.cat.com serving both /.well-known/openid-configuration and
+    /.well-known/oauth-authorization-server at HTTP 200. The documentation host
+    digital.cat.com is behind a Cloudflare bot policy that returns 403 to every
+    non-browser client, so its pages were read through the search index rather than
+    fetched; caterpillar.com and cat.com sit behind an Akamai policy that blanket-403s
+    non-browser clients including a control path that cannot exist.
+  probes:
+    - url: https://fedlogin.cat.com/.well-known/openid-configuration
+      status: 200
+    - url: https://fedlogin.cat.com/.well-known/oauth-authorization-server
+      status: 200
+    - url: https://services.cat.com/telematics/iso15143/fleet/1
+      status: 401
+    - url: https://services.cat.com/catDigital/assetSummary/v1/assets
+      status: 401
+    - url: https://services.cat.com/catDigital/faultsHistory/v1/faults
+      status: 401
+    - url: https://api.cat.com/openapi.json
+      status: 404
+    - url: https://services.cat.com/openapi.json
+      status: 404
+    - url: https://digital.cat.com/api-catalog-overview
+      status: 403
+    - url: https://www.caterpillar.com/.well-known/agent-card.json
+      status: 403
+    - url: https://hackerone.com/caterpillar
+      status: 200
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com

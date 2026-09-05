@@ -1,0 +1,109 @@
+generated: '2026-09-05'
+method: searched
+source: >-
+  https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide ;
+  https://digital.cat.com/development-guidelines ;
+  live probes of https://services.cat.com and https://fedlogin.cat.com, 2026-09-05
+note: >-
+  Derived from Cat Digital's published developer guidance and from live
+  unauthenticated responses, not from an OpenAPI — Caterpillar publishes no public
+  spec. Anything not stated by Caterpillar is recorded as unknown rather than assumed.
+authentication:
+  style: oauth2-bearer
+  token_url: https://fedlogin.cat.com/as/token.oauth2
+  grant: client_credentials
+  header: 'Authorization: Bearer <access_token>'
+  token_lifetime_minutes: 60
+  refresh: >-
+    Cat Digital's guide tells consumers to request a replacement token from the
+    same token URL when one expires, rather than exercising a refresh_token grant.
+  onboarding: >-
+    Subscription is requested through digital.cat.com; credentials arrive by email
+    on approval, which Caterpillar says takes approximately two weeks.
+  see: authentication/caterpillar-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  note: >-
+    No idempotency key, request-deduplication window or replay-protection
+    mechanism is documented anywhere in the Cat Digital estate. The published API
+    surface is read-oriented telematics retrieval (fleet snapshot, equipment
+    snapshot, timeseries, asset summary, fault history, utilization), so there is
+    little mutating traffic for a key to protect — but the absence is real and is
+    recorded as `none`, not as `na`, because the marketplace does advertise a
+    third-party API integrations tool and a subscription workflow.
+  see: null
+reversibility:
+  grade: na
+  applicable: false
+  note: >-
+    The publicly documented Cat Digital API surface is read-only telematics
+    retrieval. No create/update/delete/dispatch operation is published, so there
+    is no write to reverse and no reversal window to state. If Caterpillar later
+    publishes a mutating operation (a geofence write, a subscription change, a
+    work-order dispatch), this block must be re-derived — an agent acting on
+    heavy equipment needs an explicit answer before it acts, and `na` here is a
+    statement about the published surface, not a claim that Caterpillar's platform
+    has no writes.
+  reversal_operations: []
+dry_run_mode:
+  supported: false
+  note: >-
+    No dry-run, validate-only or preview mode is documented, and there is no
+    sandbox environment to rehearse against — Cat Digital states the VisionLink
+    APIs are production-only.
+pagination:
+  style: page-number-in-path
+  parameters:
+    - name: pageNumber
+      in: path
+      example: https://services.cat.com/telematics/iso15143/fleet/1
+  page_size: 100
+  page_size_configurable: false
+  response_fields:
+    - links.self
+    - links.next
+  note: >-
+    ISO 15143-3 responses are paginated at a fixed page size of 100 and chunked
+    across pages, with the next page reachable through the links the payload
+    carries (Caterpillar's guide shows those links rendered against both
+    services.cat.com and api.cat.com). VisionLink API pagination is not publicly
+    documented.
+  source: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
+field_expansion:
+  supported: unknown
+  note: Not documented publicly.
+metadata:
+  supported: unknown
+  note: Not documented publicly.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No correlation or request-id header is documented, and none was observed on
+    the anonymous 401/404 responses from the gateway.
+versioning:
+  style: uri-path
+  see: lifecycle/caterpillar-lifecycle.yml
+error_envelope:
+  format: bespoke
+  media_type: application/json
+  shape: '{"code": "<http-status>.<nnn>", "description": "<message>"}'
+  rfc9457: false
+  see: errors/caterpillar-problem-types.yml
+rate_limit_signaling:
+  response_headers: []
+  documented_headers: false
+  exhaustion_status: 429
+  exhaustion_body: '{"code":"429.002","description":"Quota rate limit exceeded."}'
+  note: >-
+    Caterpillar documents the numeric limits but not the response headers. No
+    X-RateLimit-*, RateLimit-* or Retry-After header is documented, and none was
+    present on the anonymous responses observed. An agent therefore has to infer
+    its remaining budget from the published quota rather than read it at runtime.
+  see: rate-limits/caterpillar-rate-limits.yml
+content_negotiation:
+  response_formats: [application/json]
+  note: >-
+    ISO 15143-3 / AEMP 2.0 is defined for both XML and JSON; only JSON was
+    observed from the Cat gateway.

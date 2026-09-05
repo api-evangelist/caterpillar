@@ -1,0 +1,72 @@
+generated: '2026-09-05'
+method: probed
+source: >-
+  live unauthenticated responses from https://services.cat.com and
+  https://api.cat.com, 2026-09-05; plus the Cat Digital ISO 15143-3 (AEMP 2.0)
+  developer guide
+format: bespoke
+media_type: application/json
+note: >-
+  Caterpillar does not publish RFC 9457 problem+json. Every Cat Digital API
+  fronted by the Apigee gateway returns a two-field JSON envelope. The codes are
+  dotted and namespaced by HTTP status — <http-status>.<sequence> — so the class
+  is machine-readable from the code alone. The three below are recorded from
+  evidence: two observed live on an anonymous request, one quoted in Caterpillar's
+  own developer guide. This is not the complete registry; the full error reference
+  sits inside the subscriber-gated portal.
+envelope:
+  shape: '{"code": "<http-status>.<nnn>", "description": "<human message>"}'
+  fields:
+    - name: code
+      type: string
+      description: Dotted error code. The part before the dot is the HTTP status.
+    - name: description
+      type: string
+      description: Human-readable message. Not localized in any observed response.
+  observed_example: '{"code":"401.006","description":"Missing Authorization header or token value"}'
+problems:
+  - status: 401
+    code: '401.006'
+    title: Missing Authorization header or token value
+    remediation: >-
+      Obtain an OAuth 2.0 access token from
+      https://fedlogin.cat.com/as/token.oauth2 using the client id and secret
+      issued on subscription approval, and send it as a bearer token in the
+      Authorization header. Tokens expire after 60 minutes.
+    method: probed
+    evidence:
+      - url: https://services.cat.com/telematics/iso15143/fleet/1
+        http_status: 401
+      - url: https://services.cat.com/catDigital/assetSummary/v1/assets
+        http_status: 401
+      - url: https://services.cat.com/catDigital/faultsHistory/v1/faults
+        http_status: 401
+      - url: https://api.cat.com/catDigital/assetSummary/v1/assets
+        http_status: 401
+  - status: 404
+    code: '404.001'
+    title: 'No resource for GET <url>'
+    remediation: Check the base path and version segment against the developer guide for that API product.
+    method: probed
+    evidence:
+      - url: https://services.cat.com/
+        http_status: 404
+      - url: https://api.cat.com/openapi.json
+        http_status: 404
+  - status: 429
+    code: '429.002'
+    title: Quota rate limit exceeded.
+    remediation: >-
+      Back off and retry after the daily quota resets at 12:00am GMT, or reduce
+      call rate below the per-client-id throttle. See
+      rate-limits/caterpillar-rate-limits.yml.
+    method: searched
+    source: https://digital.cat.com/knowledge-hub/articles/iso-15143-3-aemp-20-api-developer-guide
+coverage:
+  codes_recorded: 3
+  codes_probed: 2
+  registry_published: false
+  note: >-
+    Caterpillar publishes no public error-code registry. The dotted scheme implies
+    at least six 401.* codes (401.006 is the sixth) and at least two 429.* codes,
+    but the rest are not publicly enumerated and are deliberately not guessed at here.

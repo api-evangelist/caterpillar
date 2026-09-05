@@ -1,0 +1,83 @@
+generated: '2026-09-05'
+method: probed
+source: https://fedlogin.cat.com/.well-known/openid-configuration
+note: >-
+  Read from `scopes_supported` in the live OIDC discovery document served by
+  Caterpillar's PingFederate authorization server (HTTP 200, 2026-09-05). This is
+  the authorization server's full advertised scope set across every client it
+  serves — Caterpillar publishes no per-API scope reference page, and the Cat
+  Digital developer guides describe the client-credentials exchange without naming
+  scopes, so which of these an ISO 15143-3 or VisionLink subscription is actually
+  granted is not publicly stated. Descriptions below are the standard OIDC
+  meanings where they apply; the Caterpillar-specific scopes carry no published
+  description and are recorded without one rather than guessed at.
+docs: null
+schemes:
+  - name: CatDigitalOAuth2
+    source: https://fedlogin.cat.com/.well-known/openid-configuration
+    flows:
+      - flow: clientCredentials
+        tokenUrl: https://fedlogin.cat.com/as/token.oauth2
+      - flow: authorizationCode
+        authorizationUrl: https://fedlogin.cat.com/as/authorization.oauth2
+        tokenUrl: https://fedlogin.cat.com/as/token.oauth2
+scopes:
+  - scope: openid
+    description: OpenID Connect — request an ID token.
+    standard: true
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: profile
+    description: Standard OIDC profile claims (displayName, givenName, sn).
+    standard: true
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: email
+    description: Standard OIDC email claim (mail).
+    standard: true
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: address
+    description: Standard OIDC address claim.
+    standard: true
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: phone_number
+    description: Phone claim (telephonenumber).
+    standard: false
+    note: Non-standard spelling of the OIDC `phone` scope.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: read:all
+    description: null
+    note: Caterpillar-specific; no published description.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: write:all
+    description: null
+    note: Caterpillar-specific; no published description.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: manage:all
+    description: null
+    note: Caterpillar-specific; no published description.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: import:all
+    description: null
+    note: Caterpillar-specific; no published description.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: affiliate:all
+    description: null
+    note: Caterpillar-specific; likely tied to the catafltncode / catafltnclass claims.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: session:role-any
+    description: null
+    note: Caterpillar-specific session/role scope.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: user_impersonation
+    description: null
+    note: Caterpillar-specific; delegated/impersonated access.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+  - scope: WINDCHILL_READ
+    description: null
+    note: >-
+      Caterpillar-specific; names PTC Windchill (PLM), i.e. this authorization
+      server fronts internal enterprise systems as well as the public API estate.
+    sources: [https://fedlogin.cat.com/.well-known/openid-configuration]
+coverage:
+  scopes_advertised: 13
+  scopes_with_published_description: 4
+  per_api_scope_reference_published: false

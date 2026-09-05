@@ -1,0 +1,54 @@
+generated: '2026-09-05'
+method: searched
+source: https://digital.cat.com/release-notes-manager
+note: >-
+  Cat Digital runs a dated "Release Notes" manager and a "News and Announcements"
+  feed on the Digital Marketplace. Both are indexed and reachable by name, but the
+  page bodies are behind a Cloudflare bot policy that answers 403 to every
+  non-browser client, and Caterpillar's own copy says additional release-notes
+  content requires login. So the changelog SURFACE is confirmed to exist and is
+  linked; the structured entry list below carries only what could be established
+  from outside that wall, and is deliberately short rather than padded.
+scheme: dated-release-notes
+current_version: null
+changelog_url: https://digital.cat.com/release-notes-manager
+announcements_url: https://digital.cat.com/news-announcements-list
+machine_readable: false
+gated: true
+entries:
+  - version: null
+    date: null
+    deadline: '2026-06-30'
+    breaking: true
+    title: New API authentication system — credential migration required
+    highlights:
+      - Caterpillar transitioned its API estate to a new authentication system.
+      - Consumers of Caterpillar APIs had to migrate to new credentials by 30 June 2026 to keep access.
+    source: https://digital.cat.com/news-announcements-list
+  - version: null
+    date: null
+    breaking: false
+    title: ISO 15143-3 (AEMP 2.0) API released
+    highlights:
+      - Caterpillar announced the release of the new ISO 15143-3 (AEMP 2.0) API.
+      - Adds NextGen timeseries endpoints alongside Fleet Snapshot and Equipment Snapshot.
+    source: https://digital.cat.com/api-catalog-overview
+  - version: null
+    date: null
+    breaking: true
+    title: Next-generation VisionLink APIs replace the legacy VisionLink APIs
+    highlights:
+      - Assets Operation, Assets Summary, Faults History, Asset Fence History and Utilization APIs.
+      - No sunset date published for the legacy surface.
+    source: https://digital.cat.com/api-catalog-overview
+  - version: null
+    date: null
+    breaking: false
+    title: 3rd Party API Integrations tool available
+    highlights:
+      - Digital Marketplace added a tool for third-party API integrations.
+    source: https://digital.cat.com/news-and-announcements/3rd-party-api-integrations-tool-available
+related_but_distinct:
+  - name: Equipment Management Release Notes (Cat App, My.Cat.com)
+    url: https://www.cat.com/en_US/support/technology/equipment-management-release-notes0.html
+    note: Application release notes on cat.com — they cover the end-user products, not the API gateway.
