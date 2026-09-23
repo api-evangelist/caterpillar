@@ -1,7 +1,9 @@
 ---
 title: Caterpillar Teams With NVIDIA to Revolutionize Heavy ...
 url: https://www.prnewswire.com/news-releases/caterpillar-teams-with-nvidia-to-revolutionize-heavy-industry-with-physical-ai-and-robotics-302655427.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Caterpillar" press release artificial intelligence'
 position: 2
 source: serpapi-google

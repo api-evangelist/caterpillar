@@ -1,7 +1,9 @@
 ---
 title: 'Artificial Intelligence: Transforming the Way We Help Our ...'
 url: https://www.caterpillar.com/en/news/caterpillarNews/2026/ai-transforming-way-we-help-customers.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Caterpillar" press release artificial intelligence'
 position: 1
 source: serpapi-google
