@@ -72,3 +72,21 @@ plans:
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units:
+  - negotiated
+  - period
+  plans:
+  - name: Cat Digital Marketplace API (Subscriber)
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - negotiated
+    - period
+    periods:
+    - month
