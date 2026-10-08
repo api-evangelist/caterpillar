@@ -145,6 +145,8 @@ apis:
       the production environment only (no sandbox). Verified live surfaces
       include /assetSummary/v1/assets and /faultsHistory/v1/faults.
 common:
+  - type: FinOps
+    url: finops/caterpillar-finops.yml
   - type: Pricing
     url: https://digital.cat.com/api-catalog-overview
   - type: DomainSecurity
