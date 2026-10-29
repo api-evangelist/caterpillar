@@ -1,4 +1,4 @@
-# Caterpillar (caterpillar)
+# Caterpillar
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,63 +64,129 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Caterpillar Inc. (NYSE: CAT) is the world's leading manufacturer of construction and mining equipment, off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives. Its digital arm, Cat Digital, publishes developer APIs through the Cat Digital Marketplace (digital.cat.com) covering fleet, asset, fuel, and worksite telematics built on top of the Cat Connect and VisionLink data platforms.
+Caterpillar Inc. (NYSE: CAT) is the world's leading manufacturer of construction and mining equipment, off-highway diesel and natural gas engines, industrial gas turbines, and diesel-electric locomotives. Its digital arm, Cat Digital, publishes developer APIs through the Cat Digital Marketplace (digital.cat.com) covering fleet, asset, fuel, and worksite telematics built on top of the Cat Connect and VisionLink data platforms. The callable surface runs on an Apigee gateway at services.cat.com (mirrored at api.cat.com) and is authorized by a PingFederate OAuth 2.0 / OpenID Connect authorization server at fedlogin.cat.com. Caterpillar implements the ISO 15143-3 (AEMP 2.0) mixed-fleet telematics standard, so a consumer that already speaks AEMP can read Cat machine data with no bespoke connector.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/caterpillar/refs/heads/main/apis.yml)
+**Areas:** Construction · Engines · Fortune 500 · Heavy Equipment · Locomotives · Manufacturing · Mining · Telematics · Fleet Management · ISO 15143-3 · AEMP
 
-## Scope
+## Caterpillar on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Caterpillar is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/caterpillar/](https://apis.io/providers/caterpillar/)** — or go straight to one of the APIs or properties below.
 
-## Tags:
+### APIs (3)
 
- - Heavy Equipment, Construction, Mining, Manufacturing, Engines, Locomotives, Telematics, Fortune 500
+- [Cat Digital Marketplace API](https://apis.io/apis/caterpillar/cat-digital-marketplace-api/) — The Cat Digital Marketplace publishes a catalog of Caterpillar APIs spanning asset telematics, fleet management, fuel data, utilization, hours/odometer, and…
+- [ISO 15143-3 (AEMP 2.0) API](https://apis.io/apis/caterpillar/iso-15143-3-aemp-api/) — Caterpillar's implementation of the ISO 15143-3 (AEMP 2.0) mixed-fleet telematics standard. Publishes Fleet Snapshot (/fleet/{pageNumber}), Equipment…
+- [VisionLink APIs](https://apis.io/apis/caterpillar/visionlink-apis/) — The next-generation VisionLink APIs let dealers and customers pull the fleet data VisionLink reports without mining it out of the application — Assets…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-21
-- **Modified:** 2026-04-23
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Cat Digital Marketplace API
-The Cat Digital Marketplace publishes a catalog of Caterpillar APIs spanning asset telematics, fleet management, fuel data, utilization, hours/odometer, and geofencing. Developers subscribe via the Cat Digital portal to receive API credentials and execute calls against the Cat Connect and VisionLink platforms.
+Model Context Protocol servers that expose the API to agents.
 
-**Human URL:** [https://digital.cat.com/api-catalog-overview](https://digital.cat.com/api-catalog-overview)
+- [caterpillar-mcp.yml](https://apis.io/servers/caterpillar/caterpillar-mcp-yml/)
 
-#### Tags:
+#### Security (3)
 
- - Heavy Equipment, Construction, Telematics, VisionLink, Assets
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Caterpillar Authentication](https://apis.io/security/caterpillar/caterpillar-authentication/)
+- [Caterpillar Domain Security](https://apis.io/security/caterpillar/caterpillar-domain-security/)
+- [Caterpillar Vulnerability Disclosure](https://apis.io/security/caterpillar/caterpillar-vulnerability-disclosure/)
 
-- [Documentation](https://digital.cat.com/api-catalog-overview)
-- [Portal](https://digital.cat.com/)
-- [ChangeLog](https://digital.cat.com/release-notes-manager)
-- [TermsOfService](https://digital.cat.com/legal)
-- [PrivacyPolicy](https://digital.cat.com/privacy)
+#### OAuth scopes (1)
 
-## Common Properties
+The permissions the API asks for.
+
+- [Caterpillar Scopes](https://apis.io/scopes/caterpillar/caterpillar-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Caterpillar Plans Pricing](https://apis.io/plans/caterpillar/caterpillar-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Caterpillar Rate Limits](https://apis.io/rate-limits/caterpillar/caterpillar-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Caterpillar Finops](https://apis.io/finops/caterpillar/caterpillar-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.caterpillar.com/)
-- [Portal](https://digital.cat.com/)
 - [Documentation](https://digital.cat.com/api-catalog-overview)
-- [ChangeLog](https://digital.cat.com/release-notes-manager)
-- [About](https://www.caterpillar.com/en/company.html)
-- [Careers](https://www.caterpillar.com/en/careers.html)
-- [InvestorRelations](https://www.caterpillar.com/en/investors.html)
-- [PressReleases](https://www.caterpillar.com/en/news.html)
-- [Newsroom](https://www.caterpillar.com/en/news.html)
-- [Support](https://www.caterpillar.com/en/support.html)
-- [Contact](https://www.caterpillar.com/en/support/contact-us.html)
-- [TermsOfService](https://digital.cat.com/legal)
-- [PrivacyPolicy](https://digital.cat.com/privacy)
-- [Sitemap](https://www.caterpillar.com/en/sitemap.html)
+- [Getting started](https://digital.cat.com/knowledge-hub/documentation/develop-cat-apis-getting-started)
+- [API reference](https://digital.cat.com/development-guidelines)
+- [Pricing](https://digital.cat.com/api-catalog-overview)
+- [Support](https://digital.cat.com/knowledge-hub/faq)
+- [Changelog](https://digital.cat.com/release-notes-manager)
+- [Security](https://hackerone.com/caterpillar)
+- [Terms of service](https://digital.cat.com/legal)
+- [Privacy policy](https://digital.cat.com/privacy)
+- [GitHub](https://github.com/CaterpillarInc)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** API Evangelist
+**Kin Score 45.2** — developing · rubric 0.25.0 · scored 2026-10-23
 
-**Email:** info@apievangelist.com
+| Facet | Score |
+|---|---|
+| Discoverability | 79.5 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 68.4 |
+| Developer ergonomics | 59.5 |
+| Access clarity | 52.6 |
+
+**Agent readiness 20.5** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/caterpillar/](https://apis.io/providers/caterpillar/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Caterpillar: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/caterpillar/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
